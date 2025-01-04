@@ -30,6 +30,15 @@
 		sol1 = &sol1;
 	};
 
+	pwm_control {
+		compatible = "pwm-leds";
+		sol3_pwm: sol3_pwm {
+			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+	
+		};
+	};
+
+
 };
 
 
@@ -100,4 +109,11 @@
 		zephyr,resolution = <14>;
 		zephyr,oversampling = <8>;
 	};
+};
+
+&pwm0 {
+	status = "okay";
+	pinctrl-0 = <&pwm0_default>;
+	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
 };
