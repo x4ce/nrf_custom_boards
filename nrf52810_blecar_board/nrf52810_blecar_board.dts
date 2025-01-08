@@ -11,6 +11,22 @@
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &slot0_partition;
 	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_0: led0 {
+			gpios = <&gpio0 24 0>;
+			label = "Green LED";
+		};
+
+		mtr_en: mtren {
+			gpios = <&gpio0 31 0>;
+			label = "Motor Controller Enable";
+		};
+
+	};
+
 };
 
 &flash0 {
@@ -45,4 +61,8 @@
 		};
 
 	};
+};
+
+&gpio0 {
+	status = "okay";
 };
