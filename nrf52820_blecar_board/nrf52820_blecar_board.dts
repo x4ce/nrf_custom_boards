@@ -21,8 +21,16 @@
 
 	};
 
+	pwm_outputs {
+		compatible = "pwm-leds";
+		pwm_out1: pwm_out_1 {
+			pwms = <&sw_pwm 0 PWM_KHZ(4) PWM_POLARITY_INVERTED>;
+		};
+	};
+
 	aliases {
 		out1 = &out1;
+		
 	};
 
 };
@@ -58,4 +66,9 @@
 &gpio0
 {
 	status = "okay";
+};
+
+&sw_pwm {
+	status = "okay";
+	channel-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
 };
