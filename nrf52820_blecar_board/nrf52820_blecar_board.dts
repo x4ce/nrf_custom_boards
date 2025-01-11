@@ -15,7 +15,7 @@
 	outputs {
 		compatible = "gpio-leds";
 		out1: out_1 {
-			gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
 			label = "GPIO Output P109";
 		};
 
@@ -56,11 +56,6 @@
 };
 
 &gpio0
-{
-	status = "okay";
-};
-
-&gpio1
 {
 	status = "okay";
 };
