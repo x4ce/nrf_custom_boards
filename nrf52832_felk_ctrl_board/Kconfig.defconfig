@@ -1,0 +1,9 @@
+if BOARD_NRF52832_FELK_CTRL_BOARD
+
+config BOARD
+	default "nrf52832_felk_ctrl_board"
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_NRF52832_FELK_CTRL_BOARD
