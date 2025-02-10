@@ -7,10 +7,71 @@
 	compatible = "nordic_semiconductor,nrf52832-felk-ctrl-board";
 
 	chosen {
+		zephyr,console = &uart0;
+		zephyr,uart-mcumgr = &uart0;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &slot0_partition;
 	};
+
+	solenoids {
+		compatible = "gpio-leds";
+
+		sol1: sol_1 {
+			gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 1 Control";
+		};
+
+		sol1_ext: sol_1_ext {
+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 1 Ext Control";
+		};
+
+		sol2: sol_2 {
+			gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 2 Control";
+		};
+
+		sol2_ext: sol_2_ext {
+			gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 2 Ext Control";
+		};
+
+	};
+
+	motors {
+		compatible = "gpio-leds";
+
+		bldc: bldc {
+			gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>;
+			label = "BLDC Enable";
+		};
+
+	};
+
+	pwm_channels {
+		compatible = "pwm-leds";
+
+		pwm_sol3: pwm_sol3 {
+			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		};
+
+		pwm_buzz: pwm_buzz {
+			pwms = <&pwm1 0 PWM_USEC(200) PWM_POLARITY_NORMAL>;
+		};
+
+	};
+
+	aliases {
+		sol1 = &sol1;
+		sol1ext = &sol1_ext;
+		sol2 = &sol2;
+		sol2ext = &sol2_ext;
+		bldc = &bldc;
+		pwmsol3 = &pwm_sol3;
+		pwmbuzz = &pwm_buzz;
+	};
+
 };
 
 &flash0 {
@@ -44,4 +105,37 @@
 			reg = <0x0007a000 DT_SIZE_K(24)>;
 		};
 	};
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+
+&gpiote {
+	status = "okay";
+};
+
+&pwm0 {
+	status = "okay";
+	pinctrl-0 = <&pwm0_default>;
+	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pwm1 {
+	status = "okay";
+	pinctrl-0 = <&pwm1_default>;
+	pinctrl-1 = <&pwm1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&uart0 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+
 };

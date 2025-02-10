@@ -20,25 +20,61 @@
 
 	solenoids {
 		compatible = "gpio-leds";
+
 		sol1: sol_1 {
 			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
 			label = "Solenoid 1 Control";
+		};
+
+		sol1_ext: sol_1_ext {
+			gpios = <&gpio0 20 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 1 Ext Control";
+		};
+
+		sol2: sol_2 {
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 2 Control";
+		};
+
+		sol2_ext: sol_2_ext {
+			gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>;
+			label = "Solenoid 2 Ext Control";
+		};
+
+	};
+
+	motors {
+		compatible = "gpio-leds";
+
+		bldc: bldc {
+			gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>;
+			label = "BLDC Enable";
+		};
+
+	};
+
+	pwm_channels {
+		compatible = "pwm-leds";
+
+		pwm_sol3: pwm_sol3 {
+			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		};
+
+		pwm_buzz: pwm_buzz {
+			pwms = <&pwm1 0 PWM_USEC(200) PWM_POLARITY_NORMAL>;
 		};
 
 	};
 
 	aliases {
 		sol1 = &sol1;
+		sol1ext = &sol1_ext;
+		sol2 = &sol2;
+		sol2ext = &sol2_ext;
+		bldc = &bldc;
+		pwmsol3 = &pwm_sol3;
+		pwmbuzz = &pwm_buzz;
 	};
-
-	pwm_control {
-		compatible = "pwm-leds";
-		sol3_pwm: sol3_pwm {
-			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
-	
-		};
-	};
-
 
 };
 
@@ -116,5 +152,12 @@
 	status = "okay";
 	pinctrl-0 = <&pwm0_default>;
 	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pwm1 {
+	status = "okay";
+	pinctrl-0 = <&pwm1_default>;
+	pinctrl-1 = <&pwm1_sleep>;
 	pinctrl-names = "default", "sleep";
 };
