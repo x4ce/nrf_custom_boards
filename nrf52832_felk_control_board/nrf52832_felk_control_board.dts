@@ -15,7 +15,7 @@
 	};
 
 	zephyr,user {
-		io-channels = <&adc 0>;
+		io-channels = <&adc 0>, <&adc 2>, <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
 	};
 
 	solenoids {
@@ -137,13 +137,69 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
+	// Internal reference voltage
 	channel@0 {
 		reg = <0>;
 		zephyr,gain = "ADC_GAIN_1_6";
 		zephyr,reference = "ADC_REF_INTERNAL";
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
 		zephyr,input-positive = <NRF_SAADC_VDD>;
-		zephyr,resolution = <14>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
+
+	// Pressure sensor
+	channel@2 {
+		reg = <2>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN2>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
+
+	// CR1 Voltage
+	channel@4 {
+		reg = <4>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN4>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
+
+	// CR2 Voltage
+	channel@5 {
+		reg = <5>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN5>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
+
+	// Battery Voltage
+	channel@6 {
+		reg = <6>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN6>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
+
+	// Thermistor
+	channel@7 {
+		reg = <7>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN7>;
+		zephyr,resolution = <10>;
 		zephyr,oversampling = <8>;
 	};
 };
