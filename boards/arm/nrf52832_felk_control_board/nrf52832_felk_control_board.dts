@@ -15,7 +15,7 @@
 	};
 
 	zephyr,user {
-		io-channels = <&adc 0>, <&adc 2>, <&adc 3>, <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
 	};
 
 	solenoids {
@@ -47,7 +47,7 @@
 		compatible = "gpio-leds";
 
 		bldc: bldc {
-			gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>; // wrong in net list P014
 			label = "BLDC Enable";
 		};
 
@@ -137,17 +137,26 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
-	// Internal reference voltage
+	// Temperature PSU
 	channel@0 {
 		reg = <0>;
 		zephyr,gain = "ADC_GAIN_1_6";
-		zephyr,reference = "ADC_REF_INTERNAL";
-		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-		zephyr,input-positive = <NRF_SAADC_VDD>;
+		zephyr,reference = "ADC_REF_VDD_1_4";
+		zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40)>;
+		zephyr,input-positive = <NRF_SAADC_AIN0>;
 		zephyr,resolution = <10>;
 		zephyr,oversampling = <8>;
 	};
-
+	// CR1 Voltage
+	channel@1 {
+		reg = <1>;
+		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN4>;
+		zephyr,resolution = <10>;
+		zephyr,oversampling = <8>;
+	};
 	// Pressure sensor
 	channel@2 {
 		reg = <2>;
@@ -170,13 +179,13 @@
 		zephyr,oversampling = <8>;
 	};
 	
-	// CR1 Voltage
+	// VDD
 	channel@4 {
 		reg = <4>;
-		zephyr,gain = "ADC_GAIN_1_5";
+		zephyr,gain = "ADC_GAIN_1_6";
 		zephyr,reference = "ADC_REF_INTERNAL";
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-		zephyr,input-positive = <NRF_SAADC_AIN4>;
+		zephyr,input-positive = <NRF_SAADC_VDD>;
 		zephyr,resolution = <10>;
 		zephyr,oversampling = <8>;
 	};
